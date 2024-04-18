@@ -1,6 +1,5 @@
-import { initialFormData } from '@/constants/form';
-import { Form } from '@/context/Form';
-import { cardValidate } from '@/utils/cardValidations';
+import useForm from '@/hooks/useForm';
+import { useCardInfoContext } from '@/context/Form';
 import PageTitle from '@components/@common/PageTitle';
 import Button from '@components/@common/button/molecules/Button';
 import CreditCard from '@components/Card/organisms/CreditCard';
@@ -9,6 +8,8 @@ import CardNumber from '@components/CardForm/molecules/CardNumber';
 import ExpirationDate from '@components/CardForm/molecules/ExpirationDate';
 import PinNumber from '@components/CardForm/molecules/PinNumber';
 import VerificationCode from '@components/CardForm/molecules/VerificationCode';
+import { cardValidate } from '@/utils/cardValidations';
+import { FormType } from '@/type/formType';
 
 type AddCardProps = {
   onPrevious: () => void;
@@ -16,32 +17,37 @@ type AddCardProps = {
 };
 
 export default function AddCard({ onPrevious, onNext }: AddCardProps) {
-  const handleSubmit = () => {
+  const { cardInfo, setCardInfo } = useCardInfoContext();
+
+  const onSubmit = () => {
     onNext();
   };
+
+  const { handleSubmit, ...rest } = useForm({
+    values: cardInfo,
+    setValues: setCardInfo,
+    validate: cardValidate,
+    onSubmit,
+  });
 
   return (
     <div className='root'>
       <div className='app'>
         <PageTitle onPrevious={onPrevious}>카드 추가</PageTitle>
 
-        <Form
-          initialValue={initialFormData}
-          validate={cardValidate}
-          onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}>
           {/* Card */}
-          <CreditCard />
+          <CreditCard cardInfo={cardInfo as FormType} />
 
           {/* CardForm */}
-          <CardNumber />
-          <ExpirationDate />
-          <CardHolderName />
-          <VerificationCode />
-          <PinNumber />
+          <CardNumber {...rest} />
+          <ExpirationDate {...rest} />
+          <CardHolderName values={cardInfo as FormType} {...rest} />
+          <VerificationCode {...rest} />
+          <PinNumber {...rest} />
 
           <Button>다음</Button>
-        </Form>
+        </form>
       </div>
     </div>
   );

@@ -1,10 +1,17 @@
-import { useFormContext } from '@/context/Form';
-import { FormType } from '@/type/formType';
+import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
 
-export default function VerificationCode() {
-  const { getFieldProps, touched, errors } = useFormContext<FormType>();
+type VerificationCodeProps = {
+  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
+  touched: ReturnType<typeof useForm>['touched'];
+  errors: ReturnType<typeof useForm>['errors'];
+};
 
+export default function VerificationCode({
+  getFieldProps,
+  touched,
+  errors,
+}: VerificationCodeProps) {
   return (
     <>
       <Input.Container>

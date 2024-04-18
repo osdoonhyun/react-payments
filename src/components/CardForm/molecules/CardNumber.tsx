@@ -1,10 +1,17 @@
-import { useFormContext } from '@/context/Form';
-import { FormType } from '@/type/formType';
+import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
 
-export default function CardNumber() {
-  const { getFieldProps, touched, errors } = useFormContext<FormType>();
+type CardNumberProps = {
+  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
+  touched: ReturnType<typeof useForm>['touched'];
+  errors: ReturnType<typeof useForm>['errors'];
+};
 
+export default function CardNumber({
+  getFieldProps,
+  touched,
+  errors,
+}: CardNumberProps) {
   return (
     <>
       <Input.Container>

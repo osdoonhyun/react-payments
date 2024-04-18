@@ -7,11 +7,11 @@ import {
 } from '@/type/formType';
 
 export default function useForm<T extends FormValues>({
-  initialValue,
+  values,
+  setValues,
   validate,
   onSubmit,
 }: UseFormProps<T>) {
-  const [values, setValues] = useState<T>(initialValue);
   const [errors, setErrors] = useState<FormErrors<T>>({} as FormErrors<T>);
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
 
@@ -62,7 +62,7 @@ export default function useForm<T extends FormValues>({
       return;
     }
 
-    onSubmit(values);
+    onSubmit();
   };
 
   const getFieldProps = (name: keyof T) => {
@@ -79,7 +79,6 @@ export default function useForm<T extends FormValues>({
   };
 
   return {
-    values,
     errors,
     touched,
     handleBlur,

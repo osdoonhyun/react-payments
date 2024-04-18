@@ -1,20 +1,21 @@
-import { useFormContext } from '@/context/Form';
-import { FormType } from '@/type/formType';
-import { maskText } from '@/utils/maskText';
 import { Card } from '../atoms/Card';
+import { maskText } from '@/utils/maskText';
+import { FormType } from '@/type/formType';
 
-export default function CreditCard() {
+type CreditCardProps = {
+  cardInfo: FormType;
+};
+
+export default function CreditCard({ cardInfo }: CreditCardProps) {
   const {
-    values: {
-      cardNumber1,
-      cardNumber2,
-      cardNumber3,
-      cardNumber4,
-      cardHolderName,
-      expirationMonth,
-      expirationYear,
-    },
-  } = useFormContext<FormType>();
+    cardNumber1,
+    cardNumber2,
+    cardNumber3,
+    cardNumber4,
+    cardHolderName,
+    expirationMonth,
+    expirationYear,
+  } = cardInfo;
 
   const maskedCardNumber3 = maskText(cardNumber3);
   const maskedCardNumber4 = maskText(cardNumber4);

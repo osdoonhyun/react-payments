@@ -1,33 +1,37 @@
-import { createContext, ReactNode, useContext } from 'react';
-import useForm from '@/hooks/useForm';
-import { FormValues, UseFormProps } from '@/type/formType';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  SetStateAction,
+  Dispatch,
+} from 'react';
+import { FormValues } from '@/type/formType';
 
-const FormContext = createContext({});
+const CardInfoContext = createContext({});
 
-FormContext.displayName = 'FormContext';
-
-interface FormProps<T extends FormValues> extends UseFormProps<T> {
+interface FormProps {
   children: ReactNode;
+  cardInfo: FormValues;
+  setCardInfo: Dispatch<SetStateAction<FormValues>>;
 }
 
-export const Form = <T extends FormValues>({
+export const CardInfoProvider = ({
   children,
-  ...props
-}: FormProps<T>) => {
-  const formValue = useForm(props);
-
+  cardInfo,
+  setCardInfo,
+}: FormProps) => {
   return (
-    <FormContext.Provider value={formValue}>
-      <form onSubmit={formValue.handleSubmit}>{children}</form>
-    </FormContext.Provider>
+    <CardInfoContext.Provider value={{ cardInfo, setCardInfo }}>
+      {children}
+    </CardInfoContext.Provider>
   );
 };
 
-export const useFormContext = <T extends FormValues>() => {
-  const context = useContext(FormContext) as ReturnType<typeof useForm<T>>;
+export const useCardInfoContext = () => {
+  const context = useContext(CardInfoContext) as FormProps;
 
   if (!context) {
-    throw new Error('useFormContext must be used within a FormProvider');
+    throw new Error('useCardInfoContext must be used within a FormProvider');
   }
 
   return context;

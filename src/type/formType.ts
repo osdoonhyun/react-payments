@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { initialFormData } from '@/constants/form';
 
 export type FormType = typeof initialFormData;
@@ -14,7 +15,8 @@ export type FormTouched<T extends FormValues> = {
 };
 
 export interface UseFormProps<T extends FormValues> {
-  initialValue: T;
+  values: T;
+  setValues: Dispatch<SetStateAction<T>>;
   validate: (values: T) => FormErrors<T>;
-  onSubmit: (values: T) => void;
+  onSubmit: () => void;
 }

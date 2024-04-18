@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import AddCardCompleted from './AddCardCompleted';
 import AddCard from './AddCard';
+import AddCardCompleted from './AddCardCompleted';
 import CardList from '../CardList';
+import { CardInfoProvider } from '@/context/Form';
+import { initialFormData } from '@/constants/form';
+import { FormValues } from '@/type/formType';
+
+type StepType = (typeof STEP)[keyof typeof STEP];
 
 const STEP = {
   INITIAL_STEP: '카드_입력',
@@ -10,13 +15,12 @@ const STEP = {
   CARD_LIST: '카드_목록',
 } as const;
 
-type StepType = (typeof STEP)[keyof typeof STEP];
-
 export default function Payments() {
   const [step, setStep] = useState<StepType>(STEP.INITIAL_STEP);
+  const [cardInfo, setCardInfo] = useState<FormValues>(initialFormData);
 
   return (
-    <>
+    <CardInfoProvider cardInfo={cardInfo} setCardInfo={setCardInfo}>
       {step === STEP.INITIAL_STEP && (
         <AddCard
           onPrevious={() => setStep(STEP.CARD_LIST)}
@@ -29,6 +33,6 @@ export default function Payments() {
       {step === STEP.CARD_LIST && (
         <CardList onNext={() => setStep(STEP.INITIAL_STEP)} />
       )}
-    </>
+    </CardInfoProvider>
   );
 }

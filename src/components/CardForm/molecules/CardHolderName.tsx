@@ -1,16 +1,21 @@
-import { FormType } from '@/type/formType';
-import { useFormContext } from '@/context/Form';
-import { CARD_HOLDER_NAEM_MAX_LENGTH } from '@/utils/cardValidations';
+import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
+import { CARD_HOLDER_NAEM_MAX_LENGTH } from '@/utils/cardValidations';
+import { FormType } from '@/type/formType';
 
-export default function CardHolderName() {
-  const {
-    getFieldProps,
-    errors,
-    touched,
-    values: { cardHolderName },
-  } = useFormContext<FormType>();
+type CardHolderNameProps = {
+  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
+  touched: ReturnType<typeof useForm>['touched'];
+  errors: ReturnType<typeof useForm>['errors'];
+  values: FormType;
+};
 
+export default function CardHolderName({
+  getFieldProps,
+  touched,
+  errors,
+  values: { cardHolderName },
+}: CardHolderNameProps) {
   return (
     <>
       <Input.Container>
