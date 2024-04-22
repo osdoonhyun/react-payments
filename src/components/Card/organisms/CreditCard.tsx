@@ -1,13 +1,16 @@
 import { Card } from '../atoms/Card';
 import { maskText } from '@/utils/maskText';
-import { FormType } from '@/type/formType';
+import { FormValues } from '@/type/formType';
 
 type CreditCardProps = {
-  cardInfo: FormType;
+  cardInfo: FormValues;
+  onOpen?: () => void;
+  close?: () => void;
 };
 
-export default function CreditCard({ cardInfo }: CreditCardProps) {
+export default function CreditCard({ cardInfo, onOpen }: CreditCardProps) {
   const {
+    cardCompany,
     cardNumber1,
     cardNumber2,
     cardNumber3,
@@ -21,9 +24,11 @@ export default function CreditCard({ cardInfo }: CreditCardProps) {
   const maskedCardNumber4 = maskText(cardNumber4);
 
   return (
-    <Card.Box>
-      <Card.Empty>
-        <Card.Top />
+    <Card.Box onClick={onOpen}>
+      <Card.Empty style={{ backgroundColor: cardCompany.color }}>
+        <Card.Top>
+          <Card.Text fontSize='big'>{cardCompany.name}</Card.Text>
+        </Card.Top>
 
         <Card.Middle>
           <Card.Size size='small' hasChip />

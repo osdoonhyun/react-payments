@@ -3,6 +3,7 @@ import AddCard from './AddCard';
 import AddCardCompleted from './AddCardCompleted';
 import CardList from '../CardList';
 import { CardInfoProvider } from '@/context/Form';
+import { OverlayProvider } from '@/context/Overlay';
 import { initialFormData } from '@/constants/form';
 import { FormValues } from '@/type/formType';
 
@@ -20,19 +21,28 @@ export default function Payments() {
   const [cardInfo, setCardInfo] = useState<FormValues>(initialFormData);
 
   return (
-    <CardInfoProvider cardInfo={cardInfo} setCardInfo={setCardInfo}>
-      {step === STEP.INITIAL_STEP && (
-        <AddCard
-          onPrevious={() => setStep(STEP.CARD_LIST)}
-          onNext={() => setStep(STEP.ADD_CARD_COMPLETED)}
-        />
-      )}
-      {step === STEP.ADD_CARD_COMPLETED && (
-        <AddCardCompleted onNext={() => setStep(STEP.CARD_LIST)} />
-      )}
-      {step === STEP.CARD_LIST && (
-        <CardList onNext={() => setStep(STEP.INITIAL_STEP)} />
-      )}
-    </CardInfoProvider>
+    <OverlayProvider>
+      <CardInfoProvider cardInfo={cardInfo} setCardInfo={setCardInfo}>
+        <div className='root'>
+          <div className='app'>
+            {step === STEP.INITIAL_STEP && (
+              <AddCard
+                onPrevious={() => setStep(STEP.CARD_LIST)}
+                onNext={() => setStep(STEP.ADD_CARD_COMPLETED)}
+              />
+            )}
+            {step === STEP.ADD_CARD_COMPLETED && (
+              <AddCardCompleted onNext={() => setStep(STEP.CARD_LIST)} />
+            )}
+            {step === STEP.CARD_LIST && (
+              <CardList
+                onMoveToCompleted={() => setStep(STEP.ADD_CARD_COMPLETED)}
+                onNext={() => setStep(STEP.INITIAL_STEP)}
+              />
+            )}
+          </div>
+        </div>
+      </CardInfoProvider>
+    </OverlayProvider>
   );
 }
