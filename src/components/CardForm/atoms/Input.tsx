@@ -4,17 +4,7 @@ import InputContainer from './InputContainer';
 import InputTitle from './InputTitle';
 import InputUnderLine from './InputUnderLine';
 
-type FieldProps = {
-  name?: string;
-  value?: unknown;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
-  FieldProps & {
-    className?: string;
-  };
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputFactory = ({ className, ...rest }: InputProps) => {
   return <InputBasic className={className} {...rest} />;

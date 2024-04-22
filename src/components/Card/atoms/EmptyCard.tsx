@@ -1,11 +1,17 @@
-type EmptyCardProps = {
+import { PropsWithChildren } from 'react';
+
+type EmptyCardProps = PropsWithChildren & {
   onCardClick?: () => void;
-  children: React.ReactNode;
+  style?: React.CSSProperties;
 };
 
-export default function EmptyCard({ onCardClick, children }: EmptyCardProps) {
+export default function EmptyCard({
+  onCardClick,
+  children,
+  style,
+}: EmptyCardProps) {
   return (
-    <div onClick={onCardClick} className='empty-card'>
+    <div onClick={onCardClick} className='empty-card' style={style}>
       {children}
     </div>
   );
