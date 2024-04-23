@@ -7,10 +7,15 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
-export const OverlayContext = createContext({});
+interface OverlayContextType {
+  open: (params: { node: ReactNode }) => void;
+  close: () => void;
+}
+
+export const OverlayContext = createContext<OverlayContextType | null>(null);
 
 export const OverlayProvider = ({ children }: PropsWithChildren) => {
-  const [_, setIsOpen] = useState(false);
+  const [, setIsOpen] = useState(false);
   const [node, setNode] = useState<ReactNode>(null);
 
   const open = ({ node }: { node: ReactNode }) => {
