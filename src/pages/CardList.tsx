@@ -36,22 +36,26 @@ export default function CardList({ onNext, onMoveToCompleted }: CardListProps) {
         <PageTitle className='mb-10'>보유 카드</PageTitle>
       </HStack>
 
-      {cardList.map((card: FormValues, index) => (
-        <>
-          <div
-            key={`card-list-${card.cardNumber1}-${index}`}
-            onClick={() => moveToAddCardCompletedPage(card)}
-          >
-            <CreditCard cardInfo={card} />
-            <CardNickname text={card.cardAlias} />
-          </div>
-          <button onClick={() => handleDeleteButton(card)}>삭제</button>
-        </>
-      ))}
+      <div className='card-list-body'>
+        {cardList.map((card: FormValues, index) => (
+          <>
+            <div
+              key={`card-list-${card.cardNumber1}-${index}`}
+              onClick={() => moveToAddCardCompletedPage(card)}
+            >
+              <CreditCard cardInfo={card} />
+              <CardNickname text={card.cardAlias} />
+            </div>
+            <button onClick={() => handleDeleteButton(card)}>삭제</button>
+          </>
+        ))}
+      </div>
 
-      <Card.Box>
-        <Card.Empty onCardClick={moveToAddCardPage}>+</Card.Empty>
-      </Card.Box>
+      <div className='card-list-footer'>
+        <Card.Box>
+          <Card.Empty onCardClick={moveToAddCardPage}>+</Card.Empty>
+        </Card.Box>
+      </div>
     </div>
   );
 }

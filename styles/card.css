@@ -133,3 +133,15 @@
   vertical-align: middle;
   font-weight: 400;
 }
+
+.card-list-body {
+  max-height: 400px;
+  height: 100%;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.card-list-footer {
+  padding-top: 20px;
+  height: 200px;
+}
