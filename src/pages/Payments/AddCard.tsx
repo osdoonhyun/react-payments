@@ -13,6 +13,7 @@ import VerificationCode from '@components/CardForm/molecules/VerificationCode';
 import CardCompanyBottomSheet from '@components/Card/organisms/CardCompanySelectBottomSheet';
 import { cardValidate } from '@/utils/cardValidations';
 import { FormType } from '@/type/formType';
+import { inputFields } from '@/constants/form';
 
 type AddCardProps = {
   onPrevious: () => void;
@@ -41,6 +42,15 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
     });
   };
 
+  const allFieldsTouched = Object.keys(inputFields).every(
+    (key) => rest.touched[key] === true
+  );
+
+  const hasNoErrors = Object.values(rest.errors).every((error) => error === '');
+
+  const isNextButtonDisabled = !allFieldsTouched || !hasNoErrors;
+
+  // TODO: AddPage가 아닌 Funnel 시작 시 openBottomSheet
   useEffect(() => {
     openBottomSheet({
       node: <CardCompanyBottomSheet onChange={setCardInfo} />,
@@ -65,9 +75,12 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
         <CardHolderName values={cardInfo as FormType} {...rest} />
         <VerificationCode {...rest} />
         <PinNumber {...rest} />
-
-        <Button onClick={onSubmit}>다음</Button>
+        {/* TODO: 버튼 타입을 footer로 빼서 시멘틱하게 변경하기 */}
       </form>
+
+      <Button type='submit' disabled={isNextButtonDisabled} onClick={onSubmit}>
+        다음
+      </Button>
     </>
   );
 }
