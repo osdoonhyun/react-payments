@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useForm from '@/hooks/useForm';
 import useOverlay from '@/hooks/useOverlay';
-import { useCardInfoContext } from '@/context/Form';
+import { useCardInfoContext } from '@/context/CardInfo';
 import PageTitle from '@components/@common/PageTitle';
 import Button from '@components/@common/button/molecules/Button';
 import CreditCard from '@components/Card/organisms/CreditCard';

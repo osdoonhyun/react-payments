@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { useCardInfoContext } from '@/context/Form';
+import { useCardInfoContext } from '@/context/CardInfo';
 import { Card } from '@components/Card/atoms/Card';
 import { Input } from '@components/CardForm/atoms/Input';
 import Button from '@components/@common/button/molecules/Button';

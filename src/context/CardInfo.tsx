@@ -1,21 +1,20 @@
 import {
   createContext,
-  ReactNode,
   useContext,
   SetStateAction,
   Dispatch,
   useState,
+  PropsWithChildren,
 } from 'react';
 import { FormValues } from '@/type/formType';
 import { initialFormData } from '@/constants/form';
 
-interface FormProps {
-  children: ReactNode;
+interface CardInfoProps extends PropsWithChildren {
   cardInfo: FormValues;
   setCardInfo: Dispatch<SetStateAction<FormValues>>;
 }
 
-interface CardInfoContextType extends FormProps {
+interface CardInfoContextType extends CardInfoProps {
   cardList: FormValues[];
   addCard: (card: FormValues) => void;
   updateCard: (name: string, value: string, card: FormValues) => void;
@@ -29,7 +28,7 @@ export const CardInfoProvider = ({
   children,
   cardInfo,
   setCardInfo,
-}: FormProps) => {
+}: CardInfoProps) => {
   const [cardList, setCardList] = useState<FormValues[]>([]);
 
   const addCard = (card: FormValues) => {

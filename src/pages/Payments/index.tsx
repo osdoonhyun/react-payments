@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AddCard from './AddCard';
 import AddCardCompleted from './AddCardCompleted';
 import CardList from '../CardList';
-import { CardInfoProvider } from '@/context/Form';
+import { CardInfoProvider } from '@/context/CardInfo';
 import { OverlayProvider } from '@/context/Overlay';
 import { initialFormData } from '@/constants/form';
 import { FormValues } from '@/type/formType';

@@ -1,4 +1,4 @@
-import { useCardInfoContext } from '@/context/Form';
+import { useCardInfoContext } from '@/context/CardInfo';
 import CardNickname from '@components/Card/atoms/CardNickname';
 import { Card } from '@components/Card/atoms/Card';
 import CreditCard from '@components/Card/organisms/CreditCard';
