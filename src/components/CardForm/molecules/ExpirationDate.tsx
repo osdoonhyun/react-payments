@@ -33,9 +33,10 @@ export default function ExpirationDate({
         </Input.Box>
       </Input.Container>
 
-      {errors.expirationMonth && touched.expirationMonth && (
-        <span>{errors.expirationMonth}</span>
-      )}
+      {[touched.expirationYear, touched.expirationMonth].every(Boolean) &&
+        [errors.expirationYear, errors.expirationMonth].some(Boolean) && (
+          <span>{errors.expirationYear || errors.expirationMonth}</span>
+        )}
     </>
   );
 }

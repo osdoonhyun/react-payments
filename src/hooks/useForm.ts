@@ -16,7 +16,13 @@ export default function useForm<T extends FormValues>({
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
+    // eslint-disable-next-line prefer-const
+    let { value, name } = e.target;
+
+    if (name === 'expirationMonth') {
+      value = value.padStart(2, '0');
+    }
+
     setValues({
       ...values,
       [name]: value,

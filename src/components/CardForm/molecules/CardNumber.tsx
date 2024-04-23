@@ -35,9 +35,25 @@ export default function CardNumber({
         </Input.Box>
       </Input.Container>
 
-      {touched.cardNumber1 && errors.cardNumber1 && (
-        <span>{errors.cardNumber1}</span>
-      )}
+      {[
+        touched.cardNumber1,
+        touched.cardNumber2,
+        touched.cardNumber3,
+        touched.cardNumber4,
+      ].every(Boolean) &&
+        [
+          errors.cardNumber1,
+          errors.cardNumber2,
+          errors.cardNumber3,
+          errors.cardNumber4,
+        ].some(Boolean) && (
+          <span>
+            {errors.cardNumber1 ||
+              errors.cardNumber2 ||
+              errors.cardNumber3 ||
+              errors.cardNumber4}
+          </span>
+        )}
     </>
   );
 }

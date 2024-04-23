@@ -32,9 +32,10 @@ export default function PinNumber({
         <Input type='password' className='w-15' value={0} readOnly />
       </Input.Container>
 
-      {errors.pinNumber1 && touched.pinNumber1 && (
-        <span>{errors.pinNumber1}</span>
-      )}
+      {[touched.pinNumber1, touched.pinNumber2].every(Boolean) &&
+        [errors.pinNumber1, errors.pinNumber2].some(Boolean) && (
+          <span>{errors.pinNumber1 || errors.pinNumber2}</span>
+        )}
     </>
   );
 }
