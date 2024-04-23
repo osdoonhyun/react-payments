@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useForm from '@/hooks/useForm';
 import useOverlay from '@/hooks/useOverlay';
 import { useCardInfoContext } from '@/context/Form';
@@ -40,6 +41,12 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
       node: <CardCompanyBottomSheet onChange={setCardInfo} />,
     });
   };
+
+  useEffect(() => {
+    openBottomSheet({
+      node: <CardCompanyBottomSheet onChange={setCardInfo} />,
+    });
+  }, []);
 
   return (
     <>
