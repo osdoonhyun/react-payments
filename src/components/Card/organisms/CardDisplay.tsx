@@ -2,13 +2,13 @@ import { Card } from '../atoms/Card';
 import { maskText } from '@/utils/maskText';
 import { FormValues } from '@/type/formType';
 
-type CreditCardProps = {
+type CardDisplayProps = {
   cardInfo: FormValues;
   onOpen?: () => void;
   close?: () => void;
 };
 
-export default function CreditCard({ cardInfo, onOpen }: CreditCardProps) {
+export default function CardDisplay({ cardInfo, onOpen }: CardDisplayProps) {
   const {
     cardCompany,
     cardNumber1,

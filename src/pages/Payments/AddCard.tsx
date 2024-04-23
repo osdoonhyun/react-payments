@@ -4,7 +4,7 @@ import useOverlay from '@/hooks/useOverlay';
 import { useCardInfoContext } from '@/context/CardInfo';
 import PageTitle from '@components/@common/PageTitle';
 import Button from '@components/@common/button/molecules/Button';
-import CreditCard from '@components/Card/organisms/CreditCard';
+import CardDisplay from '@components/Card/organisms/CardDisplay';
 import CardHolderName from '@components/CardForm/molecules/CardHolderName';
 import CardNumber from '@components/CardForm/molecules/CardNumber';
 import ExpirationDate from '@components/CardForm/molecules/ExpirationDate';
@@ -35,8 +35,7 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
     onSubmit,
   });
 
-  // TODO: CreditCard -> CardDisplay로 변경
-  const handleCreditCardClick = () => {
+  const handleCardDisplayClick = () => {
     openBottomSheet({
       node: <CardCompanyBottomSheet onChange={setCardInfo} />,
     });
@@ -53,9 +52,9 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
       <PageTitle onPrevious={onPrevious}>카드 추가</PageTitle>
 
       {/* Card */}
-      <CreditCard
+      <CardDisplay
         cardInfo={cardInfo as FormType}
-        onOpen={handleCreditCardClick}
+        onOpen={handleCardDisplayClick}
         {...rest}
       />
 

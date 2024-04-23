@@ -1,7 +1,7 @@
 import { useCardInfoContext } from '@/context/CardInfo';
 import CardNickname from '@components/Card/atoms/CardNickname';
 import { Card } from '@components/Card/atoms/Card';
-import CreditCard from '@components/Card/organisms/CreditCard';
+import CardDisplay from '@components/Card/organisms/CardDisplay';
 import PageTitle from '@components/@common/PageTitle';
 import HStack from '@components/@common/layout/HStack';
 import { FormValues } from '@/type/formType';
@@ -43,7 +43,7 @@ export default function CardList({ onNext, onMoveToCompleted }: CardListProps) {
               key={`card-list-${card.cardNumber1}-${index}`}
               onClick={() => moveToAddCardCompletedPage(card)}
             >
-              <CreditCard cardInfo={card} />
+              <CardDisplay cardInfo={card} />
               <CardNickname text={card.cardAlias} />
             </div>
             <button onClick={() => handleDeleteButton(card)}>삭제</button>
