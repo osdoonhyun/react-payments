@@ -39,7 +39,9 @@ export default function CardDisplay({ cardInfo, onOpen }: CardDisplayProps) {
             <Card.Text fontSize='big'>{`${cardNumber1}  ${cardNumber2}  ${maskedCardNumber3}  ${maskedCardNumber4}`}</Card.Text>
           </Card.Bottom>
           <Card.Bottom as='info'>
-            <Card.Text>{cardHolderName || 'NAME'}</Card.Text>
+            <Card.Text className='text-overflow-ellipsis'>
+              {cardHolderName || 'NAME'}
+            </Card.Text>
             <Card.Text>
               {`${expirationMonth || 'MM'} / ${expirationYear || 'YY'}`}
             </Card.Text>
