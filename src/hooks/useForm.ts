@@ -16,12 +16,7 @@ export default function useForm<T extends FormValues>({
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line prefer-const
-    let { value, name } = e.target;
-
-    if (name === 'expirationMonth') {
-      value = value.padStart(2, '0');
-    }
+    const { value, name } = e.target;
 
     setValues({
       ...values,
@@ -41,9 +36,23 @@ export default function useForm<T extends FormValues>({
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line prefer-const
+    let { value, name } = e.target;
+
+    // TODO: 분리시킬 수는 없을까?
+    if (name === 'expirationMonth') {
+      if (value.length === 1) {
+        value = value.padStart(2, '0');
+      }
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    }
+
     setTouched({
       ...touched,
-      [e.target.name]: true,
+      [name]: true,
     });
   };
 
