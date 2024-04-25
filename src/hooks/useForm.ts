@@ -18,10 +18,10 @@ export default function useForm<T extends FormValues>({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
 
-    setValues({
-      ...values,
+    setValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
-    });
+    }));
 
     const fieldName = name;
     const fieldErrors = validate({
@@ -29,31 +29,38 @@ export default function useForm<T extends FormValues>({
       [fieldName]: value,
     });
 
-    setErrors({
-      ...errors,
+    setErrors((prevErrors) => ({
+      ...prevErrors,
       [fieldName]: fieldErrors[fieldName],
-    });
+    }));
+  };
+
+  // TODO: 분리시킬 수 있을까?
+  const handleExpirationMonthBlur = (value: string) => {
+    if (value.length === 1) {
+      return value.padStart(2, '0');
+    }
+
+    return value;
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     // eslint-disable-next-line prefer-const
     let { value, name } = e.target;
 
-    // TODO: 분리시킬 수는 없을까?
     if (name === 'expirationMonth') {
-      if (value.length === 1) {
-        value = value.padStart(2, '0');
-      }
-      setValues({
-        ...values,
-        [name]: value,
-      });
+      value = handleExpirationMonthBlur(value);
     }
 
-    setTouched({
-      ...touched,
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+
+    setTouched((prevTouched) => ({
+      ...prevTouched,
       [name]: true,
-    });
+    }));
   };
 
   const handleSubmit = (e: FormEvent) => {

@@ -1,13 +1,19 @@
 import { FormValues } from '@/type/formType';
 
 const CARD_NUMBER_REGEX = /^\d{4}$/;
-const MONTH_REGEX = /^\d{2}$/;
+const MONTH_REGEX = /^\d{1,2}$/;
 const YEAR_REGEX = /^\d{2}$/;
 const VERIFICATION_CODE_REGEX = /^\d{3}$/;
 const PIN_NUMBER_REGEX = /^\d{1}$/;
 
-export const CARD_HOLDER_NAEM_MAX_LENGTH = 30;
-const CURRENT_YEAR = Number(new Date().getFullYear().toString().slice(-2));
+export const CARD_HOLDER_NAME_MAX_LENGTH = 30;
+
+const JANUARY = 1;
+const DECEMBER = 12;
+
+const isValidType = (value: unknown): boolean => {
+  return !isNaN(Number(value));
+};
 
 const isValidCardNumber = (cardNumber: string) => {
   return CARD_NUMBER_REGEX.test(cardNumber);
@@ -17,26 +23,26 @@ const isValidMonth = (month: string) => {
   if (!MONTH_REGEX.test(month)) {
     return false;
   }
-  const monthNumber = Number(month);
 
-  return monthNumber >= 1 && monthNumber <= 12;
+  return Number(month) >= JANUARY && Number(month) <= DECEMBER;
 };
 
 const isValidYear = (year: string) => {
-  if (!YEAR_REGEX.test(year)) {
-    return false;
-  }
-  const yearNumber = Number(year);
+  return YEAR_REGEX.test(year);
+};
 
-  return yearNumber >= CURRENT_YEAR;
+const isValidExpiryDate = (month: string, year: string) => {
+  const currentDate = new Date();
+  const expiryDate = new Date(`20${year}-${month}`);
+
+  return currentDate < expiryDate;
 };
 
 const isValidCardHolderName = (cardHolderName: string) => {
-  return cardHolderName.length <= CARD_HOLDER_NAEM_MAX_LENGTH;
+  return cardHolderName.length <= CARD_HOLDER_NAME_MAX_LENGTH;
 };
 
-// TODO: 변수명 수정하기 isVerificationCode -> isValidVerificationCode
-const isVerificationCode = (verificationCode: string) => {
+const isValidVerificationCode = (verificationCode: string) => {
   return VERIFICATION_CODE_REGEX.test(verificationCode);
 };
 
@@ -79,15 +85,26 @@ export const cardValidate = (values: FormValues) => {
   }
 
   if (!isValidYear(values.expirationYear)) {
+    errors.expirationYear = '유효한 연도가 아닙니다.';
+  }
+
+  if (!isValidExpiryDate(values.expirationMonth, values.expirationYear)) {
     errors.expirationYear = '만료일이 지난 카드입니다.';
+  }
+
+  if (!isValidType(values.expirationMonth)) {
+    errors.expirationMonth = '유효하지 않은 형식입니다.';
+  }
+
+  if (!isValidType(values.expirationYear)) {
+    errors.expirationYear = '유효하지 않은 형식입니다.';
   }
 
   if (!isValidCardHolderName(values.cardHolderName)) {
     errors.cardHolderName = '이름은 30자 이하로 입력해 주세요.';
   }
 
-  // TODO: 변수명 수정하기
-  if (!isVerificationCode(values.verificationCode)) {
+  if (!isValidVerificationCode(values.verificationCode)) {
     errors.verificationCode = '보안 코드는 숫자만 입력 가능합니다.';
   }
 
