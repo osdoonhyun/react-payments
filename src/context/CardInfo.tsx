@@ -1,21 +1,19 @@
 import {
   createContext,
   useContext,
-  SetStateAction,
-  Dispatch,
   useState,
   PropsWithChildren,
+  useCallback,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import { FormValues } from '@/type/formType';
 import { initialFormData } from '@/constants/form';
 
-interface CardInfoProps extends PropsWithChildren {
+interface CardInfoContextType extends PropsWithChildren {
   cardInfo: FormValues;
-  setCardInfo: Dispatch<SetStateAction<FormValues>>;
-}
-
-interface CardInfoContextType extends CardInfoProps {
   cardList: FormValues[];
+  setCardInfo: Dispatch<SetStateAction<FormValues>>;
   addCard: (card: FormValues) => void;
   updateCard: (name: string, value: string, card: FormValues) => void;
   deleteCard: (card: FormValues) => void;
@@ -24,41 +22,43 @@ interface CardInfoContextType extends CardInfoProps {
 
 const CardInfoContext = createContext<CardInfoContextType | null>(null);
 
-export const CardInfoProvider = ({
-  children,
-  cardInfo,
-  setCardInfo,
-}: CardInfoProps) => {
+export const CardInfoProvider = ({ children }: PropsWithChildren) => {
+  const [cardInfo, setCardInfo] = useState<FormValues>(initialFormData);
   const [cardList, setCardList] = useState<FormValues[]>([]);
 
-  const addCard = (card: FormValues) => {
+  const addCard = useCallback((card: FormValues) => {
     setCardList((prevCardList) => [...prevCardList, card]);
-  };
+  }, []);
 
-  const updateCard = (name: string, value: string, card: FormValues) => {
-    setCardList((prevCardList) =>
-      prevCardList.map((prevCard) =>
-        prevCard.cardNumber1 === card.cardNumber1
-          ? { ...card, [name]: value }
-          : prevCard
-      )
-    );
-  };
+  const updateCard = useCallback(
+    (name: string, value: string, card: FormValues) => {
+      setCardList((prevCardList) =>
+        prevCardList.map((prevCard) =>
+          prevCard.cardNumber1 === card.cardNumber1
+            ? { ...card, [name]: value }
+            : prevCard
+        )
+      );
+    },
+    []
+  );
 
-  const deleteCard = (card: FormValues) => {
+  const deleteCard = useCallback((card: FormValues) => {
     setCardList((prevCardList) =>
       prevCardList.filter(
         (prevCard) => prevCard.cardNumber1 !== card.cardNumber1
       )
     );
-  };
+  }, []);
 
-  const resetCard = () => {
+  const resetCard = useCallback(() => {
     setCardInfo(initialFormData);
-  };
+  }, []);
 
   const cardListContext = {
+    cardInfo,
     cardList,
+    setCardInfo,
     addCard,
     updateCard,
     deleteCard,
@@ -66,9 +66,7 @@ export const CardInfoProvider = ({
   };
 
   return (
-    <CardInfoContext.Provider
-      value={{ cardInfo, setCardInfo, ...cardListContext }}
-    >
+    <CardInfoContext.Provider value={{ ...cardListContext }}>
       {children}
     </CardInfoContext.Provider>
   );

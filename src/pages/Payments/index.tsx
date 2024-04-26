@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import AddCard from './AddCard';
 import AddCardCompleted from './AddCardCompleted';
 import CardList from '../CardList';
 import { CardInfoProvider } from '@/context/CardInfo';
 import { OverlayProvider } from '@/context/Overlay';
-import { initialFormData } from '@/constants/form';
-import { FormValues } from '@/type/formType';
 import { useStepper } from '@/hooks/useStepper';
 
 export type StepType = typeof CARD_REGISTRATION_STEPS;
@@ -18,7 +15,6 @@ export const CARD_REGISTRATION_STEPS = [
 ] as const;
 
 export default function Payments() {
-  const [cardInfo, setCardInfo] = useState<FormValues>(initialFormData);
   const { Stepper, Step, setStep } = useStepper<StepType>(
     CARD_REGISTRATION_STEPS
   );
@@ -29,7 +25,7 @@ export default function Payments() {
 
   return (
     <OverlayProvider>
-      <CardInfoProvider cardInfo={cardInfo} setCardInfo={setCardInfo}>
+      <CardInfoProvider>
         <div className='root'>
           <div className='app'>
             <Stepper>
