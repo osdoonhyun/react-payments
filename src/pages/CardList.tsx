@@ -5,18 +5,19 @@ import CardDisplay from '@components/Card/organisms/CardDisplay';
 import PageTitle from '@components/@common/PageTitle';
 import HStack from '@components/@common/layout/HStack';
 import { FormValues } from '@/type/formType';
+import { sortByDateDescending } from '@/utils/sort';
 
 type CardListProps = {
   onNext: () => void;
-  onMoveToCompleted: () => void;
+  moveToStep: () => void;
 };
 
-export default function CardList({ onNext, onMoveToCompleted }: CardListProps) {
+export default function CardList({ onNext, moveToStep }: CardListProps) {
   const { cardList, setCardInfo, deleteCard, resetCard } = useCardInfoContext();
 
   const moveToAddCardCompletedPage = (card: FormValues) => {
     setCardInfo(card);
-    onMoveToCompleted();
+    moveToStep();
   };
 
   const moveToAddCardPage = () => {
@@ -36,18 +37,22 @@ export default function CardList({ onNext, onMoveToCompleted }: CardListProps) {
         <PageTitle className='mb-10'>보유 카드</PageTitle>
       </HStack>
 
-      <div className='card-list-body'>
-        {cardList.map((card: FormValues, index) => (
-          <>
-            <div
-              key={`card-list-${card.cardNumber1}-${index}`}
-              onClick={() => moveToAddCardCompletedPage(card)}
-            >
-              <CardDisplay cardInfo={card} />
-              <CardNickname text={card.cardAlias} />
+      <div className='card-list-body w-75'>
+        {sortByDateDescending(cardList).map((card: FormValues, index) => (
+          <div
+            key={`card-list-${card.cardNumber1}-${index}`}
+            className='flex-column-center '
+          >
+            <CardDisplay
+              cardInfo={card}
+              onOpen={() => moveToAddCardCompletedPage(card)}
+            />
+            <div className='flex-center w-60 mt-3'>
+              <CardNickname text={card.cardAlias || card.cardCompany.name} />
+              <span className='mx-auto'>|</span>
+              <button onClick={() => handleDeleteButton(card)}>삭제</button>
             </div>
-            <button onClick={() => handleDeleteButton(card)}>삭제</button>
-          </>
+          </div>
         ))}
       </div>
 

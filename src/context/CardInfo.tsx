@@ -27,16 +27,18 @@ export const CardInfoProvider = ({ children }: PropsWithChildren) => {
   const [cardList, setCardList] = useState<FormValues[]>([]);
 
   const addCard = useCallback((card: FormValues) => {
-    setCardList((prevCardList) => [...prevCardList, card]);
+    const newCard = { ...card, updatedAt: new Date() };
+
+    setCardList((prevCardList) => [...prevCardList, newCard]);
   }, []);
 
   const updateCard = useCallback(
     (name: string, value: string, card: FormValues) => {
+      const updatedCard = { ...card, [name]: value, updatedAt: new Date() };
+
       setCardList((prevCardList) =>
         prevCardList.map((prevCard) =>
-          prevCard.cardNumber1 === card.cardNumber1
-            ? { ...card, [name]: value }
-            : prevCard
+          prevCard.cardNumber1 === card.cardNumber1 ? updatedCard : prevCard
         )
       );
     },
