@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { FormValues } from '@/type/formType';
 import { initialFormData } from '@/constants/form';
+import { generateUniqueId } from '@/utils/uniqueId';
 
 interface CardInfoContextType extends PropsWithChildren {
   cardInfo: FormValues;
@@ -27,8 +28,9 @@ export const CardInfoProvider = ({ children }: PropsWithChildren) => {
   const [cardList, setCardList] = useState<FormValues[]>([]);
 
   const addCard = useCallback((card: FormValues) => {
-    const newCard = { ...card, updatedAt: new Date() };
+    const newCard = { ...card, id: generateUniqueId() };
 
+    setCardInfo(newCard);
     setCardList((prevCardList) => [...prevCardList, newCard]);
   }, []);
 
@@ -38,7 +40,7 @@ export const CardInfoProvider = ({ children }: PropsWithChildren) => {
 
       setCardList((prevCardList) =>
         prevCardList.map((prevCard) =>
-          prevCard.cardNumber1 === card.cardNumber1 ? updatedCard : prevCard
+          prevCard.id === card.id ? updatedCard : prevCard
         )
       );
     },
@@ -47,9 +49,7 @@ export const CardInfoProvider = ({ children }: PropsWithChildren) => {
 
   const deleteCard = useCallback((card: FormValues) => {
     setCardList((prevCardList) =>
-      prevCardList.filter(
-        (prevCard) => prevCard.cardNumber1 !== card.cardNumber1
-      )
+      prevCardList.filter((prevCard) => prevCard.id !== card.id)
     );
   }, []);
 

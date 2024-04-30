@@ -38,11 +38,8 @@ export default function CardList({ onNext, moveToStep }: CardListProps) {
       </HStack>
 
       <div className='card-list-body w-75'>
-        {sortByDateDescending(cardList).map((card: FormValues, index) => (
-          <div
-            key={`card-list-${card.cardNumber1}-${index}`}
-            className='flex-column-center '
-          >
+        {sortByDateDescending(cardList).map((card: FormValues) => (
+          <div key={card.id} className='flex-column-center '>
             <CardDisplay
               cardInfo={card}
               onOpen={() => moveToAddCardCompletedPage(card)}

@@ -1,4 +1,5 @@
 export const initialFormData = Object.freeze({
+  id: 0,
   updatedAt: new Date(),
   cardCompany: { id: '', name: '', color: '' },
   cardAlias: '',
