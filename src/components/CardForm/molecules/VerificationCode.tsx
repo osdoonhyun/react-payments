@@ -1,5 +1,7 @@
 import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
+import HStack from '@components/@common/layout/HStack';
+import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
 
 type VerificationCodeProps = {
   getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
@@ -12,21 +14,28 @@ export default function VerificationCode({
   touched,
   errors,
 }: VerificationCodeProps) {
-  return (
-    <>
-      <Input.Container>
-        <Input.Title>보안코드(CVC/CVV)</Input.Title>
-        <Input
-          type='password'
-          className='w-25'
-          maxLength={3}
-          {...getFieldProps('verificationCode')}
-        />
-      </Input.Container>
+  const verificationCodeErrors = [errors.verificationCode];
+  const verificationCodeTouched = [touched.verificationCode];
 
-      {errors.verificationCode && touched.verificationCode && (
-        <span>{errors.verificationCode}</span>
-      )}
-    </>
+  const hasVerificationCodeErrors = hasErrors(verificationCodeErrors);
+  const allVerificationCodeTouched = allTouched(verificationCodeTouched);
+  const verificationCodeErrorMessage = findErrorMessage(verificationCodeErrors);
+
+  return (
+    <Input.Container>
+      <HStack className='input-space-between'>
+        <Input.Title>보안코드(CVC/CVV)</Input.Title>
+        {hasVerificationCodeErrors && allVerificationCodeTouched && (
+          <Input.ErrorMessage errorMessage={verificationCodeErrorMessage} />
+        )}
+      </HStack>
+
+      <Input
+        type='password'
+        className='w-25'
+        maxLength={3}
+        {...getFieldProps('verificationCode')}
+      />
+    </Input.Container>
   );
 }

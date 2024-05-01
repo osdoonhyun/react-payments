@@ -1,7 +1,9 @@
 import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
-import { CARD_HOLDER_NAEM_MAX_LENGTH } from '@/utils/cardValidations';
+import { CARD_HOLDER_NAME_MAX_LENGTH } from '@/utils/cardValidations';
 import { FormType } from '@/type/formType';
+import HStack from '@components/@common/layout/HStack';
+import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
 
 type CardHolderNameProps = {
   getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
@@ -16,24 +18,31 @@ export default function CardHolderName({
   errors,
   values: { cardHolderName },
 }: CardHolderNameProps) {
-  return (
-    <>
-      <Input.Container>
-        <div className='input-space-between'>
-          <Input.Title>카드 소유자 이름(선택)</Input.Title>
-          <Input.Title>{`${cardHolderName.length}/${CARD_HOLDER_NAEM_MAX_LENGTH}`}</Input.Title>
-        </div>
-        <Input
-          type='text'
-          maxLength={CARD_HOLDER_NAEM_MAX_LENGTH}
-          placeholder='카드에 표시된 이름과 동일하게 입력하세요.'
-          {...getFieldProps('cardHolderName')}
-        />
-      </Input.Container>
+  const cardHolderNameErrors = [errors.cardHolderName];
+  const cardHolderNameTouched = [touched.cardHolderName];
 
-      {errors.cardHolderName && touched.cardHolderName && (
-        <span>{errors.cardHolderName}</span>
-      )}
-    </>
+  const hasCardHolderNameErrors = hasErrors(cardHolderNameErrors);
+  const allCardHolderNameTouched = allTouched(cardHolderNameTouched);
+  const cardHolderNameErrorMessage = findErrorMessage(cardHolderNameErrors);
+
+  return (
+    <Input.Container>
+      <div className='input-space-between'>
+        <Input.Title>카드 소유자 이름(선택)</Input.Title>
+        <Input.Title>{`${cardHolderName.length}/${CARD_HOLDER_NAME_MAX_LENGTH}`}</Input.Title>
+      </div>
+      <HStack className='input-space-between'>
+        {hasCardHolderNameErrors && allCardHolderNameTouched && (
+          <Input.ErrorMessage errorMessage={cardHolderNameErrorMessage} />
+        )}
+      </HStack>
+
+      <Input
+        type='text'
+        maxLength={CARD_HOLDER_NAME_MAX_LENGTH}
+        placeholder='카드에 표시된 이름과 동일하게 입력하세요.'
+        {...getFieldProps('cardHolderName')}
+      />
+    </Input.Container>
   );
 }

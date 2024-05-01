@@ -31,11 +31,11 @@ const isValidYear = (year: string) => {
   return YEAR_REGEX.test(year);
 };
 
-const isValidExpiryDate = (month: string, year: string) => {
+const isValidExpirationDate = (month: string, year: string) => {
   const currentDate = new Date();
-  const expiryDate = new Date(`20${year}-${month}`);
+  const expirationDate = new Date(`20${year}-${month}`);
 
-  return currentDate < expiryDate;
+  return currentDate < expirationDate;
 };
 
 const isValidCardHolderName = (cardHolderName: string) => {
@@ -80,6 +80,14 @@ export const cardValidate = (values: FormValues) => {
     errors.cardNumber4 = '카드 번호는 4개의 숫자를 입력해 주세요.';
   }
 
+  if (!isValidType(values.expirationMonth)) {
+    errors.expirationMonth = '유효하지 않은 형식입니다.';
+  }
+
+  if (!isValidType(values.expirationYear)) {
+    errors.expirationYear = '유효하지 않은 형식입니다.';
+  }
+
   if (!isValidMonth(values.expirationMonth)) {
     errors.expirationMonth = '월은 1이상 12이하 숫자여야 합니다.';
   }
@@ -88,16 +96,8 @@ export const cardValidate = (values: FormValues) => {
     errors.expirationYear = '유효한 연도가 아닙니다.';
   }
 
-  if (!isValidExpiryDate(values.expirationMonth, values.expirationYear)) {
+  if (!isValidExpirationDate(values.expirationMonth, values.expirationYear)) {
     errors.expirationYear = '만료일이 지난 카드입니다.';
-  }
-
-  if (!isValidType(values.expirationMonth)) {
-    errors.expirationMonth = '유효하지 않은 형식입니다.';
-  }
-
-  if (!isValidType(values.expirationYear)) {
-    errors.expirationYear = '유효하지 않은 형식입니다.';
   }
 
   if (!isValidCardHolderName(values.cardHolderName)) {
@@ -108,8 +108,16 @@ export const cardValidate = (values: FormValues) => {
     errors.verificationCode = '보안 코드는 숫자만 입력 가능합니다.';
   }
 
+  if (isValidType(values.pinNumber1 || values.pinNumber2)) {
+    errors.pinNumber1 = '유효하지 않은 형식입니다.';
+  }
+
   if (!isValidPinNumber(values.pinNumber1)) {
     errors.pinNumber1 = '카드 비밀번호의 앞 2자리를 입력해 주세요.';
+  }
+
+  if (!isValidPinNumber(values.pinNumber2)) {
+    errors.pinNumber2 = '카드 비밀번호의 앞 2자리를 입력해 주세요.';
   }
 
   return errors;

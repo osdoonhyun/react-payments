@@ -1,5 +1,6 @@
 import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
+import HStack from '@components/@common/layout/HStack';
 
 type PinNumberProps = {
   getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
@@ -13,29 +14,31 @@ export default function PinNumber({
   errors,
 }: PinNumberProps) {
   return (
-    <>
-      <Input.Container>
+    <Input.Container>
+      <HStack className='input-space-between'>
         <Input.Title>카드 비밀번호</Input.Title>
-        <Input
-          type='text'
-          className='w-15'
-          maxLength={1}
-          {...getFieldProps('pinNumber1')}
-        />
-        <Input
-          type='text'
-          className='w-15'
-          maxLength={1}
-          {...getFieldProps('pinNumber2')}
-        />
-        <Input type='password' className='w-15' value={0} readOnly />
-        <Input type='password' className='w-15' value={0} readOnly />
-      </Input.Container>
+        {[touched.pinNumber1, touched.pinNumber2].every(Boolean) &&
+          [errors.pinNumber1, errors.pinNumber2].some(Boolean) && (
+            <span className='input-error'>
+              {errors.pinNumber1 || errors.pinNumber2}
+            </span>
+          )}
+      </HStack>
 
-      {[touched.pinNumber1, touched.pinNumber2].every(Boolean) &&
-        [errors.pinNumber1, errors.pinNumber2].some(Boolean) && (
-          <span>{errors.pinNumber1 || errors.pinNumber2}</span>
-        )}
-    </>
+      <Input
+        type='text'
+        className='w-15'
+        maxLength={1}
+        {...getFieldProps('pinNumber1')}
+      />
+      <Input
+        type='text'
+        className='w-15'
+        maxLength={1}
+        {...getFieldProps('pinNumber2')}
+      />
+      <Input type='password' className='w-15' value={0} readOnly />
+      <Input type='password' className='w-15' value={0} readOnly />
+    </Input.Container>
   );
 }

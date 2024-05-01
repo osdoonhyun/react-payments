@@ -1,6 +1,7 @@
 import InputBasic from './InputBasic';
 import InputBox from './InputBox';
 import InputContainer from './InputContainer';
+import InputErrorMessage from './InputErrorMessage';
 import InputTitle from './InputTitle';
 import InputUnderLine from './InputUnderLine';
 
@@ -15,4 +16,5 @@ export const Input = Object.assign(InputFactory, {
   Title: InputTitle,
   Box: InputBox,
   Underline: InputUnderLine,
+  ErrorMessage: InputErrorMessage,
 });
