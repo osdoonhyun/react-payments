@@ -3,8 +3,7 @@ import useForm from '@/hooks/useForm';
 import useOverlay from '@/hooks/useOverlay';
 import { useCardInfoContext } from '@/context/CardInfo';
 import PageTitle from '@components/@common/PageTitle';
-import Button from '@components/@common/button/molecules/Button';
-import CardDisplay from '@components/Card/organisms/CardDisplay';
+import CardDisplay from '@components/Card/organisms/CardDisplay/CardDisplay';
 import CardHolderName from '@components/CardForm/molecules/CardHolderName';
 import CardNumber from '@components/CardForm/molecules/CardNumber';
 import ExpirationDate from '@components/CardForm/molecules/ExpirationDate';
@@ -63,9 +62,9 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
 
       {/* Card */}
       <CardDisplay
+        size='small'
         cardInfo={cardInfo as FormType}
         onOpen={handleCardDisplayClick}
-        {...rest}
       />
 
       {/* CardForm */}
@@ -75,12 +74,19 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
         <CardHolderName values={cardInfo as FormType} {...rest} />
         <VerificationCode {...rest} />
         <PinNumber {...rest} />
-        {/* TODO: 버튼 타입을 footer로 빼서 시멘틱하게 변경하기 */}
       </form>
 
-      <Button type='submit' disabled={isNextButtonDisabled} onClick={onSubmit}>
-        다음
-      </Button>
+      {/* TODO: 버튼 타입을 footer로 빼서 시멘틱하게 변경하기 */}
+      <div className='button-box'>
+        <button
+          type='submit'
+          onClick={onSubmit}
+          className='button-text button-success button-active'
+          disabled={isNextButtonDisabled}
+        >
+          다음
+        </button>
+      </div>
     </>
   );
 }

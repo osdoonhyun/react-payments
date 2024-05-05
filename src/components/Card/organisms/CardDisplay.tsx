@@ -1,14 +1,18 @@
-import { Card } from '../atoms/Card';
+import { Card } from '@components/Card/atoms/Card';
 import { maskText } from '@/utils/maskText';
 import { FormValues } from '@/type/formType';
 
-type CardDisplayProps = {
+export type CardDisplayProps = {
+  size: 'small' | 'big';
   cardInfo: FormValues;
   onOpen?: () => void;
-  close?: () => void;
 };
 
-export default function CardDisplay({ cardInfo, onOpen }: CardDisplayProps) {
+export default function CardDisplay({
+  size = 'small',
+  cardInfo,
+  onOpen,
+}: CardDisplayProps) {
   const {
     cardCompany,
     cardNumber1,
@@ -25,29 +29,35 @@ export default function CardDisplay({ cardInfo, onOpen }: CardDisplayProps) {
 
   return (
     <Card.Box onClick={onOpen}>
-      <Card.Empty style={{ backgroundColor: cardCompany.color }}>
+      <Card.Size size={size} backgroundColor={cardCompany.color}>
         <Card.Top>
-          <Card.Text fontSize='big'>{cardCompany.name}</Card.Text>
+          <Card.Text fontSize={size}>{cardCompany.name}</Card.Text>
         </Card.Top>
 
         <Card.Middle>
-          <Card.Size size='small' hasChip />
+          <Card.Size size={size} hasChip />
         </Card.Middle>
 
         <Card.Bottom>
           <Card.Bottom as='number'>
-            <Card.Text fontSize='big'>{`${cardNumber1}  ${cardNumber2}  ${maskedCardNumber3}  ${maskedCardNumber4}`}</Card.Text>
+            <Card.Text
+              fontSize={size}
+            >{`${cardNumber1}  ${cardNumber2}  ${maskedCardNumber3}  ${maskedCardNumber4}`}</Card.Text>
           </Card.Bottom>
           <Card.Bottom as='info'>
-            <Card.Text className='text-overflow-ellipsis'>
+            <Card.Text
+              fontSize={size}
+              className='text-overflow-ellipsis'
+              width='80px'
+            >
               {cardHolderName || 'NAME'}
             </Card.Text>
-            <Card.Text>
+            <Card.Text fontSize={size}>
               {`${expirationMonth || 'MM'} / ${expirationYear || 'YY'}`}
             </Card.Text>
           </Card.Bottom>
         </Card.Bottom>
-      </Card.Empty>
+      </Card.Size>
     </Card.Box>
   );
 }

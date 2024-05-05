@@ -2,12 +2,16 @@ import { PropsWithChildren } from 'react';
 
 type CardBoxProps = PropsWithChildren & {
   onClick?: () => void;
-  style?: React.CSSProperties;
+  backgroundColor?: string;
 };
 
-export default function CardBox({ children, style, ...rest }: CardBoxProps) {
+export default function CardBox({
+  children,
+  onClick,
+  backgroundColor,
+}: CardBoxProps) {
   return (
-    <div className='card-box' style={style} {...rest}>
+    <div className='card-box' style={{ backgroundColor }} onClick={onClick}>
       {children}
     </div>
   );

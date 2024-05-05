@@ -1,17 +1,17 @@
 import { PropsWithChildren } from 'react';
 
-type EmptyCardProps = PropsWithChildren & {
-  onCardClick?: () => void;
-  style?: React.CSSProperties;
+export type EmptyCardProps = PropsWithChildren & {
+  onClick?: () => void;
+  backgroundColor?: string;
 };
 
 export default function EmptyCard({
-  onCardClick,
+  onClick,
   children,
-  style,
+  backgroundColor,
 }: EmptyCardProps) {
   return (
-    <div onClick={onCardClick} className='empty-card' style={style}>
+    <div onClick={onClick} className='empty-card' style={{ backgroundColor }}>
       {children}
     </div>
   );

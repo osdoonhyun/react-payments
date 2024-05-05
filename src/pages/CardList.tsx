@@ -1,7 +1,7 @@
 import { useCardInfoContext } from '@/context/CardInfo';
 import CardNickname from '@components/Card/atoms/CardNickname';
 import { Card } from '@components/Card/atoms/Card';
-import CardDisplay from '@components/Card/organisms/CardDisplay';
+import CardDisplay from '@components/Card/organisms/CardDisplay/CardDisplay';
 import PageTitle from '@components/@common/PageTitle';
 import HStack from '@components/@common/layout/HStack';
 import { FormValues } from '@/type/formType';
@@ -41,13 +41,19 @@ export default function CardList({ onNext, moveToStep }: CardListProps) {
         {sortByDateDescending(cardList).map((card: FormValues) => (
           <div key={card.id} className='flex-column-center '>
             <CardDisplay
+              size='small'
               cardInfo={card}
               onOpen={() => moveToAddCardCompletedPage(card)}
             />
             <div className='flex-center w-60 mt-3'>
               <CardNickname text={card.cardAlias || card.cardCompany.name} />
               <span className='mx-auto'>|</span>
-              <button onClick={() => handleDeleteButton(card)}>삭제</button>
+              <button
+                className='button-delete'
+                onClick={() => handleDeleteButton(card)}
+              >
+                삭제
+              </button>
             </div>
           </div>
         ))}
@@ -55,7 +61,7 @@ export default function CardList({ onNext, moveToStep }: CardListProps) {
 
       <div className='card-list-footer'>
         <Card.Box>
-          <Card.Empty onCardClick={moveToAddCardPage}>+</Card.Empty>
+          <Card.Empty onClick={moveToAddCardPage}>+</Card.Empty>
         </Card.Box>
       </div>
     </div>

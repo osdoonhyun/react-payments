@@ -1,6 +1,7 @@
-type CardBottomProps = {
+import { PropsWithChildren } from 'react';
+
+type CardBottomProps = PropsWithChildren & {
   as?: 'info' | 'number';
-  children: React.ReactNode;
 };
 
 export default function CardBottom({ as, children }: CardBottomProps) {
