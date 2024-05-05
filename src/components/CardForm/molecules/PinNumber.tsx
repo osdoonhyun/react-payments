@@ -1,6 +1,7 @@
 import useForm from '@/hooks/useForm';
 import { Input } from '../atoms/Input';
 import HStack from '@components/@common/layout/HStack';
+import { hasErrors, allTouched, findErrorMessage } from '@/utils/form';
 
 type PinNumberProps = {
   getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
@@ -13,16 +14,20 @@ export default function PinNumber({
   touched,
   errors,
 }: PinNumberProps) {
+  const pinNumberErrors = [errors.pinNumber1, errors.pinNumber2];
+  const pinNumberTouched = [touched.pinNumber1, touched.pinNumber2];
+
+  const hasPinNumberErrors = hasErrors(pinNumberErrors);
+  const allPinNumberTouched = allTouched(pinNumberTouched);
+  const pinNumberErrorMessage = findErrorMessage(pinNumberErrors);
+
   return (
     <Input.Container>
       <HStack className='input-space-between'>
         <Input.Title>카드 비밀번호</Input.Title>
-        {[touched.pinNumber1, touched.pinNumber2].every(Boolean) &&
-          [errors.pinNumber1, errors.pinNumber2].some(Boolean) && (
-            <span className='input-error'>
-              {errors.pinNumber1 || errors.pinNumber2}
-            </span>
-          )}
+        {hasPinNumberErrors && allPinNumberTouched && (
+          <Input.ErrorMessage errorMessage={pinNumberErrorMessage} />
+        )}
       </HStack>
 
       <Input
