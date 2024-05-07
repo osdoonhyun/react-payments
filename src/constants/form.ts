@@ -27,3 +27,16 @@ export const inputFields = Object.freeze({
   pinNumber1: '',
   pinNumber2: '',
 });
+
+export const FIELD_INDEX_MAP: Record<string, number> = {
+  cardNumber1: 1,
+  cardNumber2: 2,
+  cardNumber3: 3,
+  cardNumber4: 4,
+  expirationMonth: 5,
+  expirationYear: 6,
+  cardHolderName: 7,
+  verificationCode: 8,
+  pinNumber1: 9,
+  pinNumber2: 10,
+};

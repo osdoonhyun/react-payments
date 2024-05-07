@@ -49,10 +49,19 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
 
   const isNextButtonDisabled = !allFieldsTouched || !hasNoErrors;
 
+  const autoFocusStart = () => {
+    rest.autoFocusMethods.autoFocusRefs[1].current?.focus();
+  };
+
   // TODO: AddPage가 아닌 Funnel 시작 시 openBottomSheet
   useEffect(() => {
     openBottomSheet({
-      node: <CardCompanyBottomSheet onChange={setCardInfo} />,
+      node: (
+        <CardCompanyBottomSheet
+          onChange={setCardInfo}
+          onAutoFocus={autoFocusStart}
+        />
+      ),
     });
   }, []);
 

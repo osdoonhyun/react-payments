@@ -1,14 +1,10 @@
-import useForm from '@/hooks/useForm';
-import { Input } from '../atoms/Input';
-import { CARD_HOLDER_NAME_MAX_LENGTH } from '@/utils/cardValidations';
-import { FormType } from '@/type/formType';
 import HStack from '@components/@common/layout/HStack';
+import { Input } from '../atoms/Input';
+import { CardFormProps, FormType } from '@/type/formType';
+import { CARD_HOLDER_NAME_MAX_LENGTH } from '@/utils/cardValidations';
 import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
 
-type CardHolderNameProps = {
-  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
-  touched: ReturnType<typeof useForm>['touched'];
-  errors: ReturnType<typeof useForm>['errors'];
+type CardHolderNameProps = CardFormProps & {
   values: FormType;
 };
 
@@ -16,8 +12,11 @@ export default function CardHolderName({
   getFieldProps,
   touched,
   errors,
+  autoFocusMethods,
   values: { cardHolderName },
 }: CardHolderNameProps) {
+  const { autoFocusRefs } = autoFocusMethods;
+
   const cardHolderNameErrors = [errors.cardHolderName];
   const cardHolderNameTouched = [touched.cardHolderName];
 
@@ -40,6 +39,7 @@ export default function CardHolderName({
       <Input
         type='text'
         maxLength={CARD_HOLDER_NAME_MAX_LENGTH}
+        ref={autoFocusRefs[7] ?? null}
         placeholder='카드에 표시된 이름과 동일하게 입력하세요.'
         {...getFieldProps('cardHolderName')}
       />

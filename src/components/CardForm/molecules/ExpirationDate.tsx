@@ -1,19 +1,16 @@
-import useForm from '@/hooks/useForm';
-import { Input } from '../atoms/Input';
 import HStack from '@components/@common/layout/HStack';
+import { Input } from '../atoms/Input';
+import { CardFormProps } from '@/type/formType';
 import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
-
-type ExpirationDateProps = {
-  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
-  touched: ReturnType<typeof useForm>['touched'];
-  errors: ReturnType<typeof useForm>['errors'];
-};
 
 export default function ExpirationDate({
   getFieldProps,
   touched,
   errors,
-}: ExpirationDateProps) {
+  autoFocusMethods,
+}: CardFormProps) {
+  const { autoFocusRefs } = autoFocusMethods;
+
   const expirationDateErrors = [errors.expirationMonth, errors.expirationYear];
   const expirationDateTouched = [
     touched.expirationMonth,
@@ -38,6 +35,7 @@ export default function ExpirationDate({
           type='text'
           placeholder='MM'
           maxLength={2}
+          ref={autoFocusRefs[5] ?? null}
           {...getFieldProps('expirationMonth')}
         />
         <span>/</span>
@@ -45,6 +43,7 @@ export default function ExpirationDate({
           type='text'
           placeholder='YY'
           maxLength={2}
+          ref={autoFocusRefs[6] ?? null}
           {...getFieldProps('expirationYear')}
         />
       </Input.Box>

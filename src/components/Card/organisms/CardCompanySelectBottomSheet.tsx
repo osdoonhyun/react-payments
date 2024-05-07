@@ -17,19 +17,22 @@ const cardCompanies: CardCompany[] = [
 
 interface CardCompanySelectBottomSheetProps {
   onChange: Dispatch<SetStateAction<FormValues>>;
+  onAutoFocus?: () => void;
 }
 
 export default function CardCompanySelectBottomSheet({
   onChange,
+  onAutoFocus,
 }: CardCompanySelectBottomSheetProps) {
   const { close: closeBottomSheet } = useOverlay();
 
   const handleCompanyClick = (company: CardCompany) => {
-    onChange((prev) => ({
-      ...prev,
+    onChange((prevCardInfo) => ({
+      ...prevCardInfo,
       cardCompany: company,
     }));
 
+    onAutoFocus ? onAutoFocus() : null;
     closeBottomSheet();
   };
 
@@ -39,7 +42,11 @@ export default function CardCompanySelectBottomSheet({
         <div className='modal-grid'>
           {cardCompanies.map((company) => (
             // TODO:  <CardCompanyItem {...card} />
-            <label key={company.name} htmlFor={company.name}>
+            <label
+              key={company.id}
+              htmlFor={company.name}
+              className='modal-item-container'
+            >
               <Input
                 type='radio'
                 id={company.name}

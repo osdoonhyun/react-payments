@@ -1,19 +1,16 @@
-import useForm from '@/hooks/useForm';
-import { Input } from '../atoms/Input';
 import HStack from '@components/@common/layout/HStack';
+import { Input } from '../atoms/Input';
+import { CardFormProps } from '@/type/formType';
 import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
-
-type CardNumberProps = {
-  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
-  touched: ReturnType<typeof useForm>['touched'];
-  errors: ReturnType<typeof useForm>['errors'];
-};
 
 export default function CardNumber({
   getFieldProps,
   touched,
   errors,
-}: CardNumberProps) {
+  autoFocusMethods,
+}: CardFormProps) {
+  const { autoFocusRefs } = autoFocusMethods;
+
   const cardNumberErrors = [
     errors.cardNumber1,
     errors.cardNumber2,
@@ -42,19 +39,31 @@ export default function CardNumber({
         </HStack>
 
         <Input.Box>
-          <Input type='text' maxLength={4} {...getFieldProps('cardNumber1')} />
+          <Input
+            type='text'
+            maxLength={4}
+            ref={autoFocusRefs[1] ?? null}
+            {...getFieldProps('cardNumber1')}
+          />
           <div>-</div>
-          <Input type='text' maxLength={4} {...getFieldProps('cardNumber2')} />
+          <Input
+            type='text'
+            maxLength={4}
+            ref={autoFocusRefs[2] ?? null}
+            {...getFieldProps('cardNumber2')}
+          />
           <div>-</div>
           <Input
             type='password'
             maxLength={4}
+            ref={autoFocusRefs[3] ?? null}
             {...getFieldProps('cardNumber3')}
           />
           <div>-</div>
           <Input
             type='password'
             maxLength={4}
+            ref={autoFocusRefs[4] ?? null}
             {...getFieldProps('cardNumber4')}
           />
         </Input.Box>

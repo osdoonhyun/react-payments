@@ -1,10 +1,13 @@
 import { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
+import { useAutoFocus } from './useAutoFocus';
 import {
   FormErrors,
   FormTouched,
   FormValues,
   UseFormProps,
 } from '@/type/formType';
+import { FIELD_INDEX_MAP, inputFields } from '@/constants/form';
+import { formatMonthValue } from '@/utils/form';
 
 export default function useForm<T extends FormValues>({
   values,
@@ -15,8 +18,12 @@ export default function useForm<T extends FormValues>({
   const [errors, setErrors] = useState<FormErrors<T>>({} as FormErrors<T>);
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
 
+  const autoFocusMethods = useAutoFocus({
+    amount: Object.keys(inputFields).length,
+  });
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
+    const { value, name, maxLength } = e.target;
 
     setValues((prevValues) => ({
       ...prevValues,
@@ -33,15 +40,12 @@ export default function useForm<T extends FormValues>({
       ...prevErrors,
       [fieldName]: fieldErrors[fieldName],
     }));
-  };
 
-  // TODO: 분리시킬 수 있을까?
-  const handleExpirationMonthBlur = (value: string) => {
-    if (value.length === 1) {
-      return value.padStart(2, '0');
-    }
-
-    return value;
+    autoFocusMethods.handleAutoFocus({
+      index: FIELD_INDEX_MAP[name],
+      value,
+      maxLength,
+    });
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
@@ -49,7 +53,7 @@ export default function useForm<T extends FormValues>({
     let { value, name } = e.target;
 
     if (name === 'expirationMonth') {
-      value = handleExpirationMonthBlur(value);
+      value = formatMonthValue(value);
     }
 
     setValues((prevValues) => ({
@@ -107,5 +111,6 @@ export default function useForm<T extends FormValues>({
     handleChange,
     handleSubmit,
     getFieldProps,
+    autoFocusMethods,
   };
 }

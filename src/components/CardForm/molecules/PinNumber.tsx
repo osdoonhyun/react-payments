@@ -1,19 +1,16 @@
-import useForm from '@/hooks/useForm';
-import { Input } from '../atoms/Input';
 import HStack from '@components/@common/layout/HStack';
+import { Input } from '../atoms/Input';
+import { CardFormProps } from '@/type/formType';
 import { hasErrors, allTouched, findErrorMessage } from '@/utils/form';
-
-type PinNumberProps = {
-  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
-  touched: ReturnType<typeof useForm>['touched'];
-  errors: ReturnType<typeof useForm>['errors'];
-};
 
 export default function PinNumber({
   getFieldProps,
   touched,
   errors,
-}: PinNumberProps) {
+  autoFocusMethods,
+}: CardFormProps) {
+  const { autoFocusRefs } = autoFocusMethods;
+
   const pinNumberErrors = [errors.pinNumber1, errors.pinNumber2];
   const pinNumberTouched = [touched.pinNumber1, touched.pinNumber2];
 
@@ -34,12 +31,14 @@ export default function PinNumber({
         type='text'
         className='w-15'
         maxLength={1}
+        ref={autoFocusRefs[9] ?? null}
         {...getFieldProps('pinNumber1')}
       />
       <Input
         type='text'
         className='w-15'
         maxLength={1}
+        ref={autoFocusRefs[10] ?? null}
         {...getFieldProps('pinNumber2')}
       />
       <Input type='password' className='w-15' value={0} readOnly />

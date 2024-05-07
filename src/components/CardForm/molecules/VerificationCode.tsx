@@ -1,19 +1,16 @@
-import useForm from '@/hooks/useForm';
-import { Input } from '../atoms/Input';
 import HStack from '@components/@common/layout/HStack';
+import { Input } from '../atoms/Input';
+import { CardFormProps } from '@/type/formType';
 import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
-
-type VerificationCodeProps = {
-  getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
-  touched: ReturnType<typeof useForm>['touched'];
-  errors: ReturnType<typeof useForm>['errors'];
-};
 
 export default function VerificationCode({
   getFieldProps,
   touched,
   errors,
-}: VerificationCodeProps) {
+  autoFocusMethods,
+}: CardFormProps) {
+  const { autoFocusRefs } = autoFocusMethods;
+
   const verificationCodeErrors = [errors.verificationCode];
   const verificationCodeTouched = [touched.verificationCode];
 
@@ -34,6 +31,7 @@ export default function VerificationCode({
         type='password'
         className='w-25'
         maxLength={3}
+        ref={autoFocusRefs[8] ?? null}
         {...getFieldProps('verificationCode')}
       />
     </Input.Container>

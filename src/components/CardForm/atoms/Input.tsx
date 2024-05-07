@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import InputBasic from './InputBasic';
 import InputBox from './InputBox';
 import InputContainer from './InputContainer';
@@ -7,9 +8,11 @@ import InputUnderLine from './InputUnderLine';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const InputFactory = ({ className, ...rest }: InputProps) => {
-  return <InputBasic className={className} {...rest} />;
-};
+const InputFactory = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...rest }, ref) => {
+    return <InputBasic className={className} ref={ref} {...rest} />;
+  }
+);
 
 export const Input = Object.assign(InputFactory, {
   Container: InputContainer,
