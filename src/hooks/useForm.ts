@@ -7,7 +7,7 @@ import {
   UseFormProps,
 } from '@/type/formType';
 import { FIELD_INDEX_MAP, inputFields } from '@/constants/form';
-import { formatMonthValue } from '@/utils/form';
+import { formatMonth } from '@/utils/formatter';
 
 export default function useForm<T extends FormValues>({
   values,
@@ -53,7 +53,7 @@ export default function useForm<T extends FormValues>({
     let { value, name } = e.target;
 
     if (name === 'expirationMonth') {
-      value = formatMonthValue(value);
+      value = formatMonth(value);
     }
 
     setValues((prevValues) => ({
