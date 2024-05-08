@@ -9,7 +9,7 @@ import CardNumber from '@components/CardForm/molecules/CardNumber';
 import ExpirationDate from '@components/CardForm/molecules/ExpirationDate';
 import PinNumber from '@components/CardForm/molecules/PinNumber';
 import VerificationCode from '@components/CardForm/molecules/VerificationCode';
-import CardCompanyBottomSheet from '@components/Card/organisms/CardCompanySelectBottomSheet';
+import CardCompanySelect from '@components/Card/organisms/CardCompanySelect';
 import { cardValidate } from '@/utils/cardValidations';
 import { FormType } from '@/type/formType';
 import { inputFields } from '@/constants/form';
@@ -37,7 +37,12 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
 
   const handleCardDisplayClick = () => {
     openBottomSheet({
-      node: <CardCompanyBottomSheet onChange={setCardInfo} />,
+      node: (
+        <CardCompanySelect
+          onChange={setCardInfo}
+          onAutoFocus={autoFocusStart}
+        />
+      ),
     });
   };
 
@@ -53,11 +58,10 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
     rest.autoFocusMethods.autoFocusRefs[1].current?.focus();
   };
 
-  // TODO: AddPage가 아닌 Funnel 시작 시 openBottomSheet
   useEffect(() => {
     openBottomSheet({
       node: (
-        <CardCompanyBottomSheet
+        <CardCompanySelect
           onChange={setCardInfo}
           onAutoFocus={autoFocusStart}
         />

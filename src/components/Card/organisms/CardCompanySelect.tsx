@@ -5,15 +5,15 @@ import { BottomSheet } from '@components/CardForm/molecules/bottomSheet/BottomSh
 import { CardCompany as CardCompanyType } from '@/type/cardType';
 import { FormValues } from '@/type/formType';
 
-interface CardCompanySelectBottomSheetProps {
+interface CardCompanySelect {
   onChange: Dispatch<SetStateAction<FormValues>>;
   onAutoFocus?: () => void;
 }
 
-export default function CardCompanySelectBottomSheet({
+export default function CardCompanySelect({
   onChange,
   onAutoFocus,
-}: CardCompanySelectBottomSheetProps) {
+}: CardCompanySelect) {
   const { close: closeBottomSheet } = useOverlay();
 
   const handleCompanyClick = (company: CardCompanyType) => {
