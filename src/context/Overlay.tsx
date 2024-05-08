@@ -2,7 +2,9 @@ import {
   PropsWithChildren,
   ReactNode,
   createContext,
+  useCallback,
   useContext,
+  useMemo,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -18,25 +20,32 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
   const [, setIsOpen] = useState(false);
   const [node, setNode] = useState<ReactNode>(null);
 
-  const open = ({ node }: { node: ReactNode }) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const open = useCallback(({ node }: { node: ReactNode }) => {
     setNode(node);
     setIsOpen(true);
-  };
+  }, []);
 
-  const close = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const close = useCallback(() => {
     setNode(null);
     setIsOpen(false);
-  };
+  }, []);
 
-  const overlayContext = {
-    open,
-    close,
-  };
+  const overlayContext = useMemo(
+    () => ({
+      open,
+      close,
+    }),
+    [open, close]
+  );
+
+  const portalRoot = document.getElementById('overlay');
 
   return (
     <OverlayContext.Provider value={overlayContext}>
-      {createPortal(<>{node}</>, document.body)}
       {children}
+      {portalRoot && createPortal(<>{node}</>, portalRoot)}
     </OverlayContext.Provider>
   );
 };
