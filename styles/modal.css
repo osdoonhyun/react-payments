@@ -1,4 +1,4 @@
-.modal {
+.modal-dimmed {
   width: 375px;
   height: 220px;
 
@@ -13,7 +13,7 @@
   z-index: 10;
 }
 
-.modal-dimmed {
+.modal {
   width: 100%;
   height: 100%;
 
