@@ -6,12 +6,14 @@ export type CardDisplayProps = {
   size: 'small' | 'big';
   cardInfo: FormValues;
   onOpen?: () => void;
+  isHover?: boolean;
 };
 
 export default function CardDisplay({
   size = 'small',
   cardInfo,
   onOpen,
+  isHover,
 }: CardDisplayProps) {
   const {
     cardCompany,
@@ -28,7 +30,7 @@ export default function CardDisplay({
   const maskedCardNumber4 = maskText(cardNumber4);
 
   return (
-    <Card.Box onClick={onOpen}>
+    <Card.Box onClick={onOpen} isHover={isHover}>
       <Card.Size size={size} backgroundColor={cardCompany.color}>
         <Card.Top>
           <Card.Text fontSize={size}>{cardCompany.name}</Card.Text>

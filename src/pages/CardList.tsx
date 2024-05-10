@@ -43,6 +43,7 @@ export default function CardList({ onNext, moveToStep }: CardListProps) {
             <CardDisplay
               size='small'
               cardInfo={card}
+              isHover={true}
               onOpen={() => moveToAddCardCompletedPage(card)}
             />
             <div className='flex-center w-60 mt-3'>

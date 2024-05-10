@@ -76,6 +76,7 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
       {/* Card */}
       <CardDisplay
         size='small'
+        isHover={true}
         cardInfo={cardInfo as FormType}
         onOpen={handleCardDisplayClick}
       />
