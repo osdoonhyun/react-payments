@@ -15,7 +15,7 @@ export default function CardSize({
 }: CardSizeProps) {
   return (
     <div
-      className={`${size}-card${hasChip ? '__chip' : ''} ${size}-card`}
+      className={`${size}-card${hasChip ? '__chip' : ''}`}
       style={{ backgroundColor }}
     >
       {children}
