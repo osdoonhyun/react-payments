@@ -4,6 +4,10 @@ import ButtonText from '../atoms/ButtonText';
 type ButtonProps = {
   className?: string;
   onClick?: () => void;
+  type?: 'submit';
+  label?: string;
+  disabled?: boolean;
+  ref?: React.Ref<HTMLInputElement> | React.RefObject<HTMLInputElement>;
   children?: React.ReactNode;
 };
 

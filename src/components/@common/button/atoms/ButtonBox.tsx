@@ -1,8 +1,9 @@
-type ButtonBoxProps = {
+import { PropsWithChildren } from 'react';
+
+type ButtonBoxProps = PropsWithChildren<{
   className?: string;
   onClick?: () => void;
-  children: React.ReactNode;
-};
+}>;
 
 export default function ButtonBox({
   className,

@@ -1,7 +1,11 @@
-type HStackProps = {
-  children: React.ReactNode;
-};
+import { HTMLAttributes, PropsWithChildren } from 'react';
 
-export default function HStack({ children }: HStackProps) {
-  return <div className='flex-center'>{children}</div>;
+type HStackProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
+
+export default function HStack({ children, ...rest }: HStackProps) {
+  return (
+    <div className='flex-center' {...rest}>
+      {children}
+    </div>
+  );
 }
