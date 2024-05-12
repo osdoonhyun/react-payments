@@ -2,14 +2,14 @@ import { CardCompany as CardCompanyType } from '@/type/cardType';
 import { Input } from '../atoms/Input';
 
 const CARD_COMPANIES: CardCompanyType[] = [
-  { id: 1, name: '신한 카드', color: 'blue' },
-  { id: 2, name: '삼성 카드', color: 'navy' },
-  { id: 3, name: '하나 카드', color: 'pink' },
-  { id: 4, name: '국민 카드', color: 'green' },
-  { id: 5, name: '우리 카드', color: 'red' },
-  { id: 6, name: '비씨 카드', color: 'orange' },
-  { id: 7, name: '현대 카드', color: 'purple' },
-  { id: 8, name: '롯데 카드', color: 'yellow' },
+  { id: 1, name: '신한 카드', color: '#E24141' },
+  { id: 2, name: '삼성 카드', color: '#547CE4' },
+  { id: 3, name: '하나 카드', color: '#73BC6D' },
+  { id: 4, name: '국민 카드', color: '#DE59B9' },
+  { id: 5, name: '우리 카드', color: '#04C09E' },
+  { id: 6, name: '비씨 카드', color: '#E76E9A' },
+  { id: 7, name: '현대 카드', color: '#F37D3B' },
+  { id: 8, name: '롯데 카드', color: '#FBCD58' },
 ];
 
 type CardCompanyProps = {
