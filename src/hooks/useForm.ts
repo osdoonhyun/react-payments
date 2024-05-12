@@ -1,28 +1,22 @@
 import { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
-import { useAutoFocus } from './useAutoFocus';
 import {
   FormErrors,
   FormTouched,
   FormValues,
   UseFormProps,
 } from '@/type/formType';
-import { FIELD_INDEX_MAP, inputFields } from '@/constants/form';
+import { FIELD_INDEX_MAP } from '@/constants/form';
 import { formatMonth } from '@/utils/formatter';
 
 export default function useForm<T extends FormValues>({
   values,
   setValues,
   validate,
+  autoFocusMethods,
   onSubmit,
 }: UseFormProps<T>) {
   const [errors, setErrors] = useState<FormErrors<T>>({} as FormErrors<T>);
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
-
-  const { submitButtonRef, handleAutoFocus, autoFocusRefs } = useAutoFocus({
-    amount: Object.keys(inputFields).length,
-  });
-
-  const autoFocusMethods = { handleAutoFocus, autoFocusRefs };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name, maxLength } = e.target;
@@ -120,6 +114,5 @@ export default function useForm<T extends FormValues>({
     handleSubmit,
     getFieldProps,
     autoFocusMethods,
-    submitButtonRef,
   };
 }

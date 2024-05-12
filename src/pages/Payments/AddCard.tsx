@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import useForm from '@/hooks/useForm';
 import useOverlay from '@/hooks/useOverlay';
+import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useCardInfoContext } from '@/context/CardInfo';
 import PageTitle from '@components/@common/PageTitle';
 import CardDisplay from '@components/Card/organisms/CardDisplay/CardDisplay';
@@ -23,17 +24,23 @@ type AddCardProps = {
 
 export default function AddCard({ onPrevious, onNext }: AddCardProps) {
   const { cardInfo, setCardInfo, addCard } = useCardInfoContext();
+
   const { open: openBottomSheet } = useOverlay();
+
+  const autoFocusMethods = useAutoFocus({
+    amount: Object.keys(inputFields).length,
+  });
 
   const onSubmit = () => {
     addCard(cardInfo);
     onNext();
   };
 
-  const { handleSubmit, submitButtonRef, ...rest } = useForm({
+  const { handleSubmit, ...rest } = useForm({
     values: cardInfo,
     setValues: setCardInfo,
     validate: cardValidate,
+    autoFocusMethods: autoFocusMethods,
     onSubmit,
   });
 
@@ -57,7 +64,7 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
   const isNextButtonDisabled = !allFieldsTouched || !hasNoErrors;
 
   const autoFocusStart = () => {
-    rest.autoFocusMethods.autoFocusRefs[1].current?.focus();
+    autoFocusMethods.autoFocusRefs[1].current?.focus();
   };
 
   useEffect(() => {
@@ -96,7 +103,6 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
         <Button
           type='submit'
           onClick={onSubmit}
-          ref={submitButtonRef}
           className='button-text button-success button-active'
           disabled={isNextButtonDisabled}
         >

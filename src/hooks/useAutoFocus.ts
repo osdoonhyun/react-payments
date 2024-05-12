@@ -14,7 +14,6 @@ export const useAutoFocus = ({ amount }: UseAutoFocusProps) => {
   const [autoFocusRefs] = useState<React.RefObject<HTMLInputElement>[]>(
     Array.from({ length: amount + 1 }, () => createRef<HTMLInputElement>())
   );
-  const submitButtonRef = createRef<HTMLButtonElement>();
 
   const onBlur = useCallback(() => {
     (document.activeElement as HTMLElement).blur();
@@ -34,9 +33,8 @@ export const useAutoFocus = ({ amount }: UseAutoFocusProps) => {
       nextFieldIndex === autoFocusRefs.length
     ) {
       onBlur();
-      submitButtonRef.current?.focus();
     }
   };
 
-  return { autoFocusRefs, handleAutoFocus, submitButtonRef };
+  return { autoFocusRefs, handleAutoFocus };
 };
