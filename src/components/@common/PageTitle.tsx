@@ -4,7 +4,6 @@ type PageTitleProps = {
   children: React.ReactNode;
 };
 
-// TODO: '< ' 부분 버튼으로 수정할 것!
 export default function PageTitle({
   className,
   onPrevious,

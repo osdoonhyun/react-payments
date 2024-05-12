@@ -15,7 +15,6 @@ export type CardCompany = {
   color: string;
 };
 
-// TODO: 카드 생선순 정렬 시 createdAt: Date;
 export interface Card {
   id: number;
   updatedAt?: Date;
