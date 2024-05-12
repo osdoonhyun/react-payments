@@ -18,9 +18,11 @@ export default function useForm<T extends FormValues>({
   const [errors, setErrors] = useState<FormErrors<T>>({} as FormErrors<T>);
   const [touched, setTouched] = useState<FormTouched<T>>({} as FormTouched<T>);
 
-  const autoFocusMethods = useAutoFocus({
+  const { submitButtonRef, handleAutoFocus, autoFocusRefs } = useAutoFocus({
     amount: Object.keys(inputFields).length,
   });
+
+  const autoFocusMethods = { handleAutoFocus, autoFocusRefs };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name, maxLength } = e.target;
@@ -50,7 +52,7 @@ export default function useForm<T extends FormValues>({
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     // eslint-disable-next-line prefer-const
-    let { value, name } = e.target;
+    let { value, name, maxLength } = e.target;
 
     if (name === 'expirationMonth') {
       value = formatMonth(value);
@@ -65,6 +67,12 @@ export default function useForm<T extends FormValues>({
       ...prevTouched,
       [name]: true,
     }));
+
+    autoFocusMethods.handleAutoFocus({
+      index: FIELD_INDEX_MAP[name],
+      value,
+      maxLength,
+    });
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -112,5 +120,6 @@ export default function useForm<T extends FormValues>({
     handleSubmit,
     getFieldProps,
     autoFocusMethods,
+    submitButtonRef,
   };
 }

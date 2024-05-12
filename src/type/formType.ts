@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import useForm from '@/hooks/useForm';
-import { useAutoFocus } from '@/hooks/useAutoFocus';
+import { HandleAutoFocusProps } from '@/hooks/useAutoFocus';
 import { initialFormData } from '@/constants/form';
 
 export type FormType = typeof initialFormData;
@@ -27,5 +27,12 @@ export type CardFormProps = {
   getFieldProps: ReturnType<typeof useForm>['getFieldProps'];
   touched: ReturnType<typeof useForm>['touched'];
   errors: ReturnType<typeof useForm>['errors'];
-  autoFocusMethods: ReturnType<typeof useAutoFocus>;
+  autoFocusMethods: {
+    autoFocusRefs: React.RefObject<HTMLInputElement>[];
+    handleAutoFocus: ({
+      value,
+      maxLength,
+      index,
+    }: HandleAutoFocusProps) => void;
+  };
 };

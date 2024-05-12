@@ -10,6 +10,8 @@ import ExpirationDate from '@components/CardForm/molecules/ExpirationDate';
 import PinNumber from '@components/CardForm/molecules/PinNumber';
 import VerificationCode from '@components/CardForm/molecules/VerificationCode';
 import CardCompanySelect from '@components/Card/organisms/CardCompanySelect';
+import Button from '@components/@common/button/atoms/Button';
+import ButtonDiv from '@components/@common/button/atoms/ButtonDiv';
 import { cardValidate } from '@/utils/cardValidations';
 import { FormType } from '@/type/formType';
 import { inputFields } from '@/constants/form';
@@ -28,7 +30,7 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
     onNext();
   };
 
-  const { handleSubmit, ...rest } = useForm({
+  const { handleSubmit, submitButtonRef, ...rest } = useForm({
     values: cardInfo,
     setValues: setCardInfo,
     validate: cardValidate,
@@ -90,17 +92,17 @@ export default function AddCard({ onPrevious, onNext }: AddCardProps) {
         <PinNumber {...rest} />
       </form>
 
-      {/* TODO: 버튼 타입을 footer로 빼서 시멘틱하게 변경하기 */}
-      <div className='button-box'>
-        <button
+      <ButtonDiv>
+        <Button
           type='submit'
           onClick={onSubmit}
+          ref={submitButtonRef}
           className='button-text button-success button-active'
           disabled={isNextButtonDisabled}
         >
           다음
-        </button>
-      </div>
+        </Button>
+      </ButtonDiv>
     </>
   );
 }

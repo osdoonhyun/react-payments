@@ -1,10 +1,10 @@
-import { createRef, useState } from 'react';
+import { createRef, useCallback, useState } from 'react';
 
 interface UseAutoFocusProps {
   amount: number;
 }
 
-interface HandleAutoFocusProps {
+export interface HandleAutoFocusProps {
   index: number;
   value: string;
   maxLength: number;
@@ -14,6 +14,11 @@ export const useAutoFocus = ({ amount }: UseAutoFocusProps) => {
   const [autoFocusRefs] = useState<React.RefObject<HTMLInputElement>[]>(
     Array.from({ length: amount + 1 }, () => createRef<HTMLInputElement>())
   );
+  const submitButtonRef = createRef<HTMLButtonElement>();
+
+  const onBlur = useCallback(() => {
+    (document.activeElement as HTMLElement).blur();
+  }, []);
 
   const handleAutoFocus = ({
     value,
@@ -24,8 +29,14 @@ export const useAutoFocus = ({ amount }: UseAutoFocusProps) => {
 
     if (value.length >= maxLength && nextFieldIndex < autoFocusRefs.length) {
       autoFocusRefs[nextFieldIndex].current?.focus();
+    } else if (
+      value.length >= maxLength &&
+      nextFieldIndex === autoFocusRefs.length
+    ) {
+      onBlur();
+      submitButtonRef.current?.focus();
     }
   };
 
-  return { autoFocusRefs, handleAutoFocus };
+  return { autoFocusRefs, handleAutoFocus, submitButtonRef };
 };
