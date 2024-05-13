@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 import { BottomSheet } from '@components/molecules/BottomSheet/BottomSheet';
-import CardCompany from '@components/organisms/CardForm/CardCompany';
+import CardCompany from '@components/organisms/CardCompany/CardCompany';
 import { CardCompany as CardCompanyType } from '@/type/cardType';
 import { FormValues } from '@/type/formType';
 
