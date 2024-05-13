@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useState } from 'react';
-import { StepType } from '@/pages/Payments';
+import { StepType } from '@/pages/Payments/Payments';
 
 interface StepProps<T> {
   name: T;
