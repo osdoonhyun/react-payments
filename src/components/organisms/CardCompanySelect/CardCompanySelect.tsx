@@ -22,7 +22,7 @@ export default function CardCompanySelect({
       cardCompany: company,
     }));
 
-    onAutoFocus ? onAutoFocus() : null;
+    onAutoFocus?.();
     closeBottomSheet();
   };
 
