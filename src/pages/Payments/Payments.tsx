@@ -26,13 +26,13 @@ export default function Payments() {
     <OverlayProvider>
       <CardInfoProvider>
         <Stepper>
-          <Step name={CARD_REGISTRATION_STEPS[0]}>
+          <Step name='카드_입력'>
             <AddCard onNext={onChangeStep(1)} onPrevious={onChangeStep(2)} />
           </Step>
-          <Step name={CARD_REGISTRATION_STEPS[1]}>
+          <Step name='카드_입력_완료'>
             <AddCardCompleted onNext={onChangeStep(2)} />
           </Step>
-          <Step name={CARD_REGISTRATION_STEPS[2]}>
+          <Step name='카드_목록'>
             <CardList onNext={onChangeStep(0)} moveToStep={onChangeStep(1)} />
           </Step>
         </Stepper>
