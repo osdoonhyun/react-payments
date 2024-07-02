@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode, useState } from 'react';
-import { StepType } from '@/pages/Payments/Payments';
 
 interface StepProps<T> {
   name: T;
@@ -10,7 +9,7 @@ interface StepperProps<T> {
   children: Array<ReactElement<StepProps<T>>>;
 }
 
-export const useStepper = <T extends StepType>(steps: T) => {
+export const useStepper = <T extends readonly string[]>(steps: T) => {
   const initialStep = steps[0];
   const [step, setStep] = useState<T[number]>(initialStep);
 
