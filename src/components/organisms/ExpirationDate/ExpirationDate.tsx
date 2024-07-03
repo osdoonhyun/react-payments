@@ -1,6 +1,8 @@
+import { FocusEvent } from 'react';
 import { Input } from '@components/molecules/Input/Input';
 import { CardFormProps } from '@/type/formType';
 import { allTouched, findErrorMessage, hasErrors } from '@/utils/form';
+import { formatMonth } from '@/utils/formatter';
 
 export default function ExpirationDate({
   getFieldProps,
@@ -15,6 +17,12 @@ export default function ExpirationDate({
     touched.expirationMonth,
     touched.expirationYear,
   ];
+
+  const handleExpirationMonthBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const { onBlur } = { ...getFieldProps('expirationMonth') };
+
+    onBlur(e, { formatter: formatMonth });
+  };
 
   const hasExpirationDateErrors = hasErrors(expirationDateErrors);
   const allExpirationDateTouched = allTouched(expirationDateTouched);
@@ -44,6 +52,7 @@ export default function ExpirationDate({
           maxLength={2}
           ref={autoFocusRefs[6] ?? null}
           {...getFieldProps('expirationYear')}
+          onBlur={handleExpirationMonthBlur}
         />
       </Input.Box>
     </Input.Container>

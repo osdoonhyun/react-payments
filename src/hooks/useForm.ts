@@ -6,7 +6,6 @@ import {
   UseFormProps,
 } from '@/type/formType';
 import { FIELD_INDEX_MAP } from '@/constants/form';
-import { formatMonth } from '@/utils/formatter';
 
 export default function useForm<T extends FormValues>({
   values,
@@ -44,12 +43,18 @@ export default function useForm<T extends FormValues>({
     });
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (
+    e: FocusEvent<HTMLInputElement>,
+    options?: {
+      formatter?: (value: string) => string;
+    }
+  ) => {
     // eslint-disable-next-line prefer-const
     let { value, name, maxLength } = e.target;
+    const { formatter } = options ?? {};
 
-    if (name === 'expirationMonth') {
-      value = formatMonth(value);
+    if (formatter) {
+      value = formatter(value);
     }
 
     setValues((prevValues) => ({
